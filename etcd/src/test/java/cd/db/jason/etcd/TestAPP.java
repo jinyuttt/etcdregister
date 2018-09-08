@@ -35,7 +35,14 @@ public class TestAPP {
     public static void main(String[] args) {
         EtcdUtil.setAddress("127.0.0.1:2379");
         int num=0;
-        EtcdUtil.clear();
+        String mm = null;
+        try {
+            mm = EtcdUtil.getEtcdValueByKey("ss");
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        System.out.println(mm);
         while(true)
         {
         try {

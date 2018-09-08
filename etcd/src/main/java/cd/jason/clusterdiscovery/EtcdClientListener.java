@@ -16,6 +16,7 @@ import com.coreos.jetcd.Client;
 import com.coreos.jetcd.Watch;
 import com.coreos.jetcd.data.ByteSequence;
 import com.coreos.jetcd.data.KeyValue;
+import com.coreos.jetcd.options.WatchOption;
 import com.coreos.jetcd.watch.WatchEvent.EventType;
 
 /**    
@@ -64,7 +65,10 @@ public class EtcdClientListener {
           //启动监听线程
           new Thread(()->
           {
-           //对某一个key进行监听
+         //  WatchOption watchOption=WatchOption.newBuilder().
+           
+            //对某一个key进行监听
+           //   client.getWatchClient().watch(ByteSequence.fromString(watchKey), watchOption);
             Watch.Watcher watcher =client.getWatchClient().watch(ByteSequence.fromString(watchKey));
               try {
                    while(!isStop) {

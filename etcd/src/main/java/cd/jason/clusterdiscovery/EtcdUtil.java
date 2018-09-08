@@ -170,7 +170,6 @@ public class EtcdUtil {
      * @return
      */
     public static void putEtcdValueByKey(String key,String value) throws Exception{
-      // client.put(key, value).send();
       client.getKVClient().put(ByteSequence.fromString(key),ByteSequence.fromBytes(value.getBytes(utf8))).get();
     }
     
@@ -187,6 +186,19 @@ public class EtcdUtil {
         client.getKVClient().put(ByteSequence.fromString(key),ByteSequence.fromBytes(value)).get();
       }
 
+    /**
+     * 
+    * @Title: putEtcdKVOrder
+    * @Description: 
+    * @param @param key
+    * @param @param value    参数
+    * @return void    返回类型
+     */
+    public static void putEtcdKVOrder(String key,String value)
+    {
+        PutOption option=PutOption.newBuilder().withPrevKV().build();
+        client.getKVClient().put(ByteSequence.fromString(key), ByteSequence.fromString(value), option);
+    }
     /**
      * 删除指定的配置
      * @param key
@@ -213,8 +225,8 @@ public class EtcdUtil {
     public static void putEtcdValueByKeyTTL(String key,String value,int ttl) throws Exception{
          LeaseGrantResponse futureResponse = client.getLeaseClient().grant(ttl).get();
          PutOption option=PutOption.newBuilder().withLeaseId(futureResponse.getID()).build();
-        client.getKVClient().put(ByteSequence.fromString(key),ByteSequence.fromBytes(value.getBytes(utf8)),option);
-        Leaseid.put(key, futureResponse.getID());
+         client.getKVClient().put(ByteSequence.fromString(key),ByteSequence.fromBytes(value.getBytes(utf8)),option);
+         Leaseid.put(key, futureResponse.getID());
       }
     
     /**
